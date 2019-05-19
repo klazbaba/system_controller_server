@@ -1,2 +1,2 @@
 # system_controller_server
-Server side of the system controller application.
+The system controller is an application that allows you use your mobile phone to control your system.
