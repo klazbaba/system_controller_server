@@ -9,8 +9,8 @@ import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
-import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
 
 
@@ -21,8 +21,8 @@ import javafx.stage.Stage;
 public class System_Controller_Server extends Application {
     @Override
     public void start(Stage primaryStage) {
+        BorderPane borderLayout = new BorderPane();
         Button btn = new Button();
-        Circle circle = new Circle(0, 0, 6);
         
         btn.setText("Start Server");
         btn.setOnAction((ActionEvent event) -> {
@@ -32,8 +32,11 @@ public class System_Controller_Server extends Application {
         });
         
         StackPane root = new StackPane();
-        root.getChildren().add(btn);
-        root.getChildren().add(circle);
+        IndicatorWrapper topRegion = new IndicatorWrapper();
+        
+        borderLayout.setTop(topRegion.addHBox());
+        borderLayout.setCenter(btn);
+        root.getChildren().add(borderLayout);
         
         Scene scene = new Scene(root, 300, 250);
         
