@@ -19,20 +19,32 @@ import javafx.stage.Stage;
  * @author macbookpro
  */
 public class System_Controller_Server extends Application {
+    private int connectionStatus = 0;
+    Button btn = new Button();
+    IndicatorWrapper topRegion = new IndicatorWrapper();
+    Server server = null;
+
+    private void updateConnectionStatus(Button button) {
+        if(connectionStatus == 0) {
+            connectionStatus = 1;
+            button.setText("Stop Server");
+        }else {
+            connectionStatus = 0;
+            button.setText("Start Server");
+        }
+    }
+    
     @Override
     public void start(Stage primaryStage) {
         BorderPane borderLayout = new BorderPane();
-        Button btn = new Button();
         
         btn.setText("Start Server");
+        btn.setPrefWidth(100);
         btn.setOnAction((ActionEvent event) -> {
-            Server server = new Server(3000);
-            btn.setVisible(false);
-            System.out.println(server);
+            toggleServer();
         });
         
         StackPane root = new StackPane();
-        IndicatorWrapper topRegion = new IndicatorWrapper();
         
         borderLayout.setTop(topRegion.addHBox());
         borderLayout.setCenter(btn);
@@ -43,6 +55,17 @@ public class System_Controller_Server extends Application {
         primaryStage.setTitle("Hello World!");
         primaryStage.setScene(scene);
         primaryStage.show();
+    }
+    
+    private void toggleServer() {
+        if(connectionStatus == 0) {
+            server = new Server(3000);
+            System.out.println(server);
+        }else {
+            server.closeConnection();
+        }
+        topRegion.toggleCircleColor(connectionStatus);
+        updateConnectionStatus(btn);
     }
 
     /**
