@@ -5,6 +5,7 @@
  */
 package system_controller_server;
 
+import java.io.IOException;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.scene.Scene;
@@ -41,7 +42,11 @@ public class System_Controller_Server extends Application {
         btn.setText("Start Server");
         btn.setPrefWidth(100);
         btn.setOnAction((ActionEvent event) -> {
-            toggleServer();
+            try {
+                toggleServer();
+            } catch (IOException ex) {
+                System.out.println(ex);
+            }
         });
         
         StackPane root = new StackPane();
@@ -52,15 +57,14 @@ public class System_Controller_Server extends Application {
         
         Scene scene = new Scene(root, 300, 250);
         
-        primaryStage.setTitle("Hello World!");
+        primaryStage.setTitle("System Controller");
         primaryStage.setScene(scene);
         primaryStage.show();
     }
     
-    private void toggleServer() {
+    private void toggleServer() throws IOException {
         if(connectionStatus == 0) {
             server = new Server(3000);
-            System.out.println(server);
         }else {
             server.closeConnection();
         }
